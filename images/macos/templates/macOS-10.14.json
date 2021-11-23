@@ -40,6 +40,71 @@
         {
             "type": "shell",
             "inline": "mkdir ~/image-generation"
+        },
+        {
+            "type": "file",
+            "source": "./provision/assets",
+            "destination": "~/image-generation/"
+        },
+        {
+            "type": "file",
+            "source": "./tests",
+            "destination": "~/image-generation/"
+        },
+        {
+            "type": "file",
+            "source": "./software-report",
+            "destination": "~/image-generation/"
+        },
+        {
+            "type": "file",
+            "source": "./helpers",
+            "destination": "~/image-generation/"
+        },
+        {
+            "type": "file",
+            "source": "./provision/configuration/environment/bashrc",
+            "destination": "~/.bashrc"
+        },
+        {
+            "type": "file",
+            "source": "./provision/configuration/environment/bashprofile",
+            "destination": "~/.bash_profile"
+        },
+        {
+            "type": "file",
+            "source": "./provision/utils",
+            "destination": "~/"
+        },
+        {
+            "type": "file",
+            "source": "./provision/bootstrap-provisioner",
+            "destination": "~/bootstrap"
+        },
+        {
+            "type": "file",
+            "source": "./toolsets/toolset-10.15.json",
+            "destination": "~/image-generation/toolset.json"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName {{user `build_id`}}",
+            ]
+        },
+        {
+            "type": "file",
+            "direction": "download",
+            "source": "~/image-generation/output/*",
+            "destination": "../image-output/"
+        },
+        {
+            "type": "shell",
+            "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} {{ .Path }}",
+            "scripts": [
+                "./provision/configuration/configure-hostname.sh",
+                "./provision/configuration/finalize-vm.sh"
+            ]
         }
     ]
 }
