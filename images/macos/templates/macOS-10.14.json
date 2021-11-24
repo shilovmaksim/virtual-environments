@@ -97,12 +97,6 @@
         },
         {
             "type": "shell",
-            "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
-            "script": "./provision/core/reboot.sh",
-            "expect_disconnect": true
-        },
-        {
-            "type": "shell",
             "inline": "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName {{user `build_id`}}"
         },
         {
