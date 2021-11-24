@@ -19,23 +19,6 @@ Import-Module "$PSScriptRoot/../helpers/SoftwareReport.Helpers.psm1"
 Import-Module "$PSScriptRoot/../helpers/Common.Helpers.psm1"
 Import-Module "$PSScriptRoot/../helpers/Xcode.Helpers.psm1"
 
-# Operating System info
-$os = Get-OSVersion
-
-$markdown = ""
-
-# OS info
-$markdown += Build-OSInfoSection
-$markdown += New-MDList -Style Unordered -Lines ("Image Version: {0}" -f $ImageName.Split('_')[1])
-
-#
-# Generate systeminfo.txt with information about image (for debug purpose)
-#
-$dateTime = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-$systemInfo = [string]::Join([System.Environment]::NewLine, @(
-    "Date: ${dateTime}",
-    "Image name: ${ImageName}"
-))
 
 
 if (-not (Test-Path $OutputDirectory)) { New-Item -Path $OutputDirectory -ItemType Directory | Out-Null }
@@ -43,6 +26,6 @@ if (-not (Test-Path $OutputDirectory)) { New-Item -Path $OutputDirectory -ItemTy
 #
 # Write final reports
 #
-Write-Host $markdownExtended
-$systemInfo | Out-File -FilePath "${OutputDirectory}/systeminfo.txt" -Encoding UTF8NoBOM
-$markdown | Out-File -FilePath "${OutputDirectory}/systeminfo.md" -Encoding UTF8NoBOM
+
+$systemInfo | Out-File -FilePath "${OutputDirectory}/systeminfo.txt"
+$markdown | Out-File -FilePath "${OutputDirectory}/systeminfo.md"
