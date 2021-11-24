@@ -83,8 +83,20 @@
         },
         {
             "type": "file",
-            "source": "./toolsets/toolset-10.15.json",
+            "source": "./toolsets/toolset-10.14.json",
             "destination": "~/image-generation/toolset.json"
+        },
+        {
+            "type": "shell",
+            "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} {{ .Path }}",
+            "pause_before": "30s",
+            "scripts": "./provision/core/powershell.sh"
+        },
+        {
+            "type": "shell",
+            "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
+            "script": "./provision/core/reboot.sh",
+            "expect_disconnect": true
         },
         {
             "type": "shell",
