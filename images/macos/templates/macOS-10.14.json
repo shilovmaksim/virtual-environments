@@ -39,7 +39,13 @@
     "provisioners": [
         {
             "type": "shell",
-            "inline": "touch systeminfo.md"
+            "inline": "pwsh -File \"$HOME/image-generation/software-report/SoftwareReport.Generator.ps1\" -OutputDirectory \"$HOME/image-generation/output/software-report\" -ImageName {{user `build_id`}}"
+        },
+        {
+            "type": "file",
+            "direction": "download",
+            "source": "~/image-generation/output/*",
+            "destination": "../image-output/"
         }
     ]
 }
